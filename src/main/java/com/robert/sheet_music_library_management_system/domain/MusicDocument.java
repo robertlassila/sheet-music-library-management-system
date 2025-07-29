@@ -20,7 +20,7 @@ public class MusicDocument {
     private String notesAboutDocument;
 
     @Lob
-    @Column(length = 10485760) // 10MB limit
+    @Column(length = 10485760)
     private byte[] pdfFile;
 
 

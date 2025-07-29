@@ -4,10 +4,7 @@ import com.robert.sheet_music_library_management_system.domain.MusicDocument;
 import com.robert.sheet_music_library_management_system.service.MusicDocumentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -29,7 +26,7 @@ public class MusicDocumentController {
     }
 
     @GetMapping("/{id}")
-    public String singleMusicDocument(Model model, Long id) {
+    public String singleMusicDocument(Model model, @PathVariable Long id) {
         model.addAttribute("musicDocument", musicDocumentService.findById(id));
         return "musicdocuments/viewsingle";
     }
@@ -40,13 +37,13 @@ public class MusicDocumentController {
         return "musicdocuments/new";
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public String saveNewMusicDocument(@ModelAttribute MusicDocument musicDocument) {
         musicDocumentService.save(musicDocument);
         return "redirect:/musicdocuments";
     }
 
-    @PostMapping
+    @PostMapping("/delete")
     public String deleteNewMusicDocument(@ModelAttribute MusicDocument musicDocument) {
         musicDocumentService.delete(musicDocument);
         return "redirect:/musicdocuments";
