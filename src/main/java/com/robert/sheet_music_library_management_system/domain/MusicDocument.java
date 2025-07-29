@@ -1,0 +1,158 @@
+package com.robert.sheet_music_library_management_system.domain;
+
+import jakarta.persistence.*;
+
+@Entity
+public class MusicDocument {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+    private String composer;
+    private String arranger;
+    private Boolean collection;
+    private Boolean hasParts;
+    private Boolean hasScore;
+    private String ensemble;
+    private String genre;
+    private String notesAboutDocument;
+
+    @Lob
+    @Column(length = 10485760) // 10MB limit
+    private byte[] pdfFile;
+
+
+    //private User user;
+
+    public MusicDocument(Long id, String title, String composer, String arranger, Boolean collection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user) {
+        this.id = id;
+        this.title = title;
+        this.composer = composer;
+        this.arranger = arranger;
+        this.collection = collection;
+        this.hasParts = hasParts;
+        this.hasScore = hasScore;
+        this.ensemble = ensemble;
+        this.genre = genre;
+        this.notesAboutDocument = notesAboutDocument;
+        //this.user = user;
+    }
+
+    public MusicDocument() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getComposer() {
+        return composer;
+    }
+
+    public void setComposer(String composer) {
+        this.composer = composer;
+    }
+
+    public String getArranger() {
+        return arranger;
+    }
+
+    public void setArranger(String arranger) {
+        this.arranger = arranger;
+    }
+
+    public Boolean getCollection() {
+        return collection;
+    }
+
+    public void setCollection(Boolean collection) {
+        this.collection = collection;
+    }
+
+    public Boolean gethasParts() {
+        return hasParts;
+    }
+
+    public void sethasParts(Boolean hasParts) {
+        this.hasParts = hasParts;
+    }
+
+    public Boolean gethasScore() {
+        return hasScore;
+    }
+
+    public void sethasScore(Boolean hasScore) {
+        this.hasScore = hasScore;
+    }
+
+    public String getEnsemble() {
+        return ensemble;
+    }
+
+    public void setEnsemble(String ensemble) {
+        this.ensemble = ensemble;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getNotesAboutDocument() {
+        return notesAboutDocument;
+    }
+
+    public void setNotesAboutDocument(String notesAboutDocument) {
+        this.notesAboutDocument = notesAboutDocument;
+    }
+
+    public byte[] getPdfFile() {
+    return pdfFile;
+    }
+
+    public void setPdfFile(byte[] pdfFile) {
+        this.pdfFile = pdfFile;
+    }
+
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
+
+    @Override
+    public String toString() {
+        return "MusicDocument{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", composer='" + composer + '\'' +
+                ", arranger='" + arranger + '\'' +
+                ", collection=" + collection +
+                ", hasParts=" + hasParts +
+                ", hasScore=" + hasScore +
+                ", ensemble='" + ensemble + '\'' +
+                ", genre='" + genre + '\'' +
+                ", notesAboutDocument='" + notesAboutDocument + '\'' +
+                //", user=" + user +
+                '}';
+    }
+}
