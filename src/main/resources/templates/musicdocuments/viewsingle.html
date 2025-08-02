@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout">
 <head>
     <meta charset="UTF-8">
-    <title>Create</title>
+    <title>Title</title>
 </head>
 <body>
-     <div th:fragment="content">
-         <form action="save" method="post">
-             <div>
+    <div th:fragment="content">
+        <div>
                  <label for="title">Title:</label>
                  <input id="title" th:field="${musicDocument.title}" type="text">
              </div>
@@ -27,12 +26,7 @@
                  <label for="genre">Genre:</label>
                  <input id="genre" th:field="${musicDocument.genre}" type="text">
              </div>
-             <div class="mb-3">
-                 <label for="pdfFile" class="form-label">PDF File *</label>
-                 <input type="file" class="form-control" id="pdfFile" name="file" accept=".pdf" required>
-             </div>
-             <button type="submit"><span>Create</span></button>
-         </form>
-     </div>
+    </div>
+
 </body>
 </html>
