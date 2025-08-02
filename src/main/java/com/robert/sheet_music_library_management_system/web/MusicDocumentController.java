@@ -31,10 +31,10 @@ public class MusicDocumentController {
         return "musicdocuments/viewsingle";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/create")
     public String newMusicDocument(Model model) {
         model.addAttribute("musicDocument", new MusicDocument());
-        return "musicdocuments/new";
+        return "musicdocuments/create";
     }
 
     @PostMapping("/save")
@@ -48,7 +48,5 @@ public class MusicDocumentController {
         musicDocumentService.delete(musicDocument);
         return "redirect:/musicdocuments";
     }
-
-
 
 }
