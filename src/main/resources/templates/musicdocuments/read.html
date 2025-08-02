@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr th:each="musicDocument : ${musicDocuments}">
-                    <td><a th:href="@{musicdocuments/{id}(id=${musicDocument.id})}" th:text="${musicDocument.title}" target="_blank"
+                    <td><a th:href="@{musicdocuments/{id}(id=${musicDocument.id})}" th:text="${musicDocument.title}" target="_self"
                                        rel="noopener noreferrer"></a></td>
                     <td th:text="${musicDocument.composer}">Composer</td>
                     <td th:text="${musicDocument.ensemble}">Ensemble</td>
