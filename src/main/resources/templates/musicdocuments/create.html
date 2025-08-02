@@ -6,6 +6,29 @@
 </head>
 <body>
      <div th:fragment="content">
+         <form action="save" method="post">
+             <div>
+                 <label for="title">Title:</label>
+                 <input id="title" th:field="${musicDocument.title}" type="text">
+             </div>
+             <div>
+                 <label for="composer">Composer:</label>
+                 <input id="composer" th:field="${musicDocument.composer}" type="text">
+             </div>
+             <div>
+                 <label for="arranger">Arranger:</label>
+                 <input id="arranger" th:field="${musicDocument.arranger}" type="text">
+             </div>
+             <div>
+                 <label for="ensemble">Ensemble:</label>
+                 <input id="ensemble" th:field="${musicDocument.ensemble}" type="text">
+             </div>
+             <div>
+                 <label for="genre">Genre:</label>
+                 <input id="genre" th:field="${musicDocument.genre}" type="text">
+             </div>
+             <button type="submit"><span>Create</span></button>
+         </form>
      </div>
 </body>
 </html>

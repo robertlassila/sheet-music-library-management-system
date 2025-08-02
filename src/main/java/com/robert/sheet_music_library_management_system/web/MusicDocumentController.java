@@ -4,6 +4,7 @@ import com.robert.sheet_music_library_management_system.domain.MusicDocument;
 import com.robert.sheet_music_library_management_system.service.MusicDocumentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -35,6 +36,13 @@ public class MusicDocumentController {
     public String newMusicDocument(Model model) {
         model.addAttribute("musicDocument", new MusicDocument());
         return "musicdocuments/create";
+    }
+
+    @GetMapping("/update/{id}")
+    public String fetch(ModelMap model, @PathVariable Long id) {
+        Optional<MusicDocument> musicDocument = musicDocumentService.findById(id);
+        model.put("musicDocument", musicDocument);
+        return "musicdocuments/update";
     }
 
     @PostMapping("/save")
