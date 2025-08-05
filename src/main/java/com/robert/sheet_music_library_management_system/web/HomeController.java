@@ -1,10 +1,26 @@
 package com.robert.sheet_music_library_management_system.web;
 
+import com.robert.sheet_music_library_management_system.domain.User;
+import com.robert.sheet_music_library_management_system.repository.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+
+import com.robert.sheet_music_library_management_system.domain.User;
+import com.robert.sheet_music_library_management_system.repository.UserRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
 public class HomeController {
+
+    private final UserRepository userRepository;
+
+    public HomeController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/")
     public String home() {
@@ -12,10 +28,18 @@ public class HomeController {
     }
 
     @GetMapping("/secured")
-    public String secured() {
-        // This is the endpoint reached after successful login.
-        // You can customize this endpoint to redirect to a main dashboard page
-        // Or add logic here to redirect to another controller's endpoint if you prefer.
-        return "securedPage";
+    public String secured(@AuthenticationPrincipal OAuth2User principal) {
+        String googleId = principal.getAttribute("sub");  // Google's unique user ID
+        String email = principal.getAttribute("email");
+        String name = principal.getAttribute("name");
+
+        if (userRepository.findByGoogleId(googleId).isEmpty()) {
+            User newUser = new User();
+            newUser.setGoogleId(googleId);
+            newUser.setEmail(email);
+            newUser.setName(name);
+            userRepository.save(newUser);
+        }
+        return "redirect:/musicdocuments";
     }
 }

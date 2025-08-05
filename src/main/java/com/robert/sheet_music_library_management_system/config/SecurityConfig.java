@@ -21,8 +21,7 @@ public class SecurityConfig {
                 })
 //                .oauth2Login(withDefaults()) // Use this line instead of 22-23 if prefer to manually enter the endpoint for /secured.
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("/musicdocuments", true)) // Redirects to /secured after login. Can be set to /dashboard or other.
-                .formLogin(withDefaults())
+                        .defaultSuccessUrl("/secured", true)) // Redirects to /secured after login. Can be set to /dashboard or other.
                 .build();
     }
 }
