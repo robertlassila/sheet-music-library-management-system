@@ -16,9 +16,15 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/").permitAll();
+                    auth.requestMatchers("/", "/save", "/musicdocuments/**", "/musicdocuments/**/pdf", "/css/**", "/js/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers
+                .frameOptions(frame -> frame
+                    .sameOrigin()
+                )
+                )
 //                .oauth2Login(withDefaults()) // Use this line instead of 22-23 if prefer to manually enter the endpoint for /secured.
                 .oauth2Login(oauth2 -> oauth2
                         .defaultSuccessUrl("/secured", true)) // Redirects to /secured after login. Can be set to /dashboard or other.

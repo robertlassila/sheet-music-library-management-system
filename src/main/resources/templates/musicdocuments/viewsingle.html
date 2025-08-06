@@ -26,6 +26,7 @@
                  <label for="genre">Genre:</label>
                  <input id="genre" th:field="${musicDocument.genre}" type="text">
              </div>
+            <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
     </div>
 
 </body>
