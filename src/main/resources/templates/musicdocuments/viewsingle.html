@@ -27,6 +27,7 @@
                  <input id="genre" th:field="${musicDocument.genre}" type="text">
              </div>
             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
+            <a th:href="@{'/musicdocuments/' + ${musicDocument.id} +'/pdf'}" download="sheet-music.pdf">Download PDF</a>
     </div>
 
 </body>

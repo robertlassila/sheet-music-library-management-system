@@ -22,8 +22,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
                 .frameOptions(frame -> frame
-                    .sameOrigin()
-                )
+                    .sameOrigin())
                 )
 //                .oauth2Login(withDefaults()) // Use this line instead of 22-23 if prefer to manually enter the endpoint for /secured.
                 .oauth2Login(oauth2 -> oauth2
