@@ -52,9 +52,8 @@ public class MusicDocumentController {
 
     @GetMapping("/update/{id}")
     public String fetch(ModelMap model, @PathVariable Long id) {
-        Optional<MusicDocument> musicDocument = musicDocumentService.findById(id);
+        musicDocumentService.findById(id).ifPresent(doc -> model.addAttribute("musicDocument", doc));
 
-        model.put("musicDocument", musicDocument);
         return "musicdocuments/update";
     }
 
@@ -67,6 +66,25 @@ public class MusicDocumentController {
         musicDocumentService.save(musicDocument);
         return "redirect:/musicdocuments";
     }
+
+    @PostMapping("/update/{id}")
+public String updateMusicDocument(@PathVariable Long id,
+                                  @ModelAttribute MusicDocument musicDocument) {
+    Optional<MusicDocument> existing = musicDocumentService.findById(id);
+    if (existing.isPresent()) {
+        MusicDocument doc = existing.get();
+
+        // Only update the text fields
+        doc.setTitle(musicDocument.getTitle());
+        doc.setComposer(musicDocument.getComposer());
+        doc.setArranger(musicDocument.getArranger());
+        doc.setEnsemble(musicDocument.getEnsemble());
+        doc.setGenre(musicDocument.getGenre());
+
+        musicDocumentService.save(doc);
+    }
+    return "redirect:/musicdocuments";
+}
 
     @PostMapping("/delete")
     public String deleteNewMusicDocument(@ModelAttribute MusicDocument musicDocument) {
