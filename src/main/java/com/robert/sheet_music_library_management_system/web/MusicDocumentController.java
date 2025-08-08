@@ -100,8 +100,9 @@ public String updateMusicDocument(@PathVariable Long id,
     byte[] pdfBytes = musicDocument.getPdfFile();
 
     return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION,
+                    "inline; filename=\"" + musicDocument.getTitle().replaceAll("\\s+", "_") + ".pdf\"")
             .contentType(MediaType.APPLICATION_PDF)
-            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"musicDocument.pdf\"")
             .body(pdfBytes);
     }
 }
