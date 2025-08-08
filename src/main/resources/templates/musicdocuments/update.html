@@ -6,7 +6,7 @@
 </head>
 <body>
      <div th:fragment="content">
-         <form action="save" method="post">
+         <form th:action="@{'/musicdocuments/update/' + ${musicDocument.id}}" method="post" th:object="${musicDocument}">
              <div>
                  <label for="title">Title:</label>
                  <input id="title" th:field="${musicDocument.title}" type="text">
