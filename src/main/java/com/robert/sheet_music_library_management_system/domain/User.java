@@ -1,10 +1,8 @@
 package com.robert.sheet_music_library_management_system.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +17,19 @@ public class User {
     private String googleId;
     private String email;
     private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MusicDocument> musicDocuments = new ArrayList<>();
+
+    public void addMusicDocument(MusicDocument doc) {
+        musicDocuments.add(doc);
+        doc.setUser(this);
+    }
+
+    public void removeMusicDocument(MusicDocument doc) {
+        musicDocuments.remove(doc);
+        doc.setUser(null);
+    }
 
 
     public Long getId() {
