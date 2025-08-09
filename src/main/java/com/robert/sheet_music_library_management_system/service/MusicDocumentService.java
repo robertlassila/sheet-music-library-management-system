@@ -36,7 +36,9 @@ public class MusicDocumentService {
         return musicDocumentRepository.findById(id);
     }
 
-
+    public List<MusicDocument> findByUser(User user) {
+        return musicDocumentRepository.findByUser(user);
+    }
 
 
 

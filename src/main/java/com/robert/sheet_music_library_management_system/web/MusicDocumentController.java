@@ -37,7 +37,13 @@ public class MusicDocumentController {
 
     @GetMapping("")
     public String listOfMusicDocuments(Model model) {
-        model.addAttribute("musicDocuments", musicDocumentService.findAll());
+        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+
+        String googleId = oauth2User.getAttribute("sub");
+        User user = (User) userService.findByGoogleId(googleId);
+        model.addAttribute("musicDocuments", musicDocumentService.findByUser(user));
         return "musicdocuments/read";
     }
 
@@ -64,7 +70,7 @@ public class MusicDocumentController {
     }
 
     @PostMapping("/save")
-public String saveNewMusicDocument(@ModelAttribute MusicDocument musicDocument,
+    public String saveNewMusicDocument(@ModelAttribute MusicDocument musicDocument,
                                    @RequestParam("file") MultipartFile file) throws IOException {
     if (!file.isEmpty()) {
         musicDocument.setPdfFile(file.getBytes());
@@ -89,7 +95,7 @@ public String saveNewMusicDocument(@ModelAttribute MusicDocument musicDocument,
 }
 
     @PostMapping("/update/{id}")
-public String updateMusicDocument(@PathVariable Long id,
+    public String updateMusicDocument(@PathVariable Long id,
                                   @ModelAttribute MusicDocument musicDocument) {
     Optional<MusicDocument> existing = musicDocumentService.findById(id);
     if (existing.isPresent()) {
