@@ -23,8 +23,9 @@ public class MusicDocument {
     @Column(length = 10485760)
     private byte[] pdfFile;
 
-
-    //private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public MusicDocument(Long id, String title, String composer, String arranger, Boolean collection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user) {
         this.id = id;
@@ -37,10 +38,18 @@ public class MusicDocument {
         this.ensemble = ensemble;
         this.genre = genre;
         this.notesAboutDocument = notesAboutDocument;
-        //this.user = user;
+        this.user = user;
     }
 
     public MusicDocument() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {

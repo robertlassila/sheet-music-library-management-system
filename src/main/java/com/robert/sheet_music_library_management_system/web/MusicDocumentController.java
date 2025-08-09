@@ -2,11 +2,15 @@ package com.robert.sheet_music_library_management_system.web;
 
 import com.nimbusds.jose.util.Resource;
 import com.robert.sheet_music_library_management_system.domain.MusicDocument;
+import com.robert.sheet_music_library_management_system.domain.User;
 import com.robert.sheet_music_library_management_system.service.MusicDocumentService;
+import com.robert.sheet_music_library_management_system.service.UserService;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -23,15 +27,23 @@ import java.util.Optional;
 public class MusicDocumentController {
 
     private final MusicDocumentService musicDocumentService;
+    private final UserService userService;
 
 
-    public MusicDocumentController(MusicDocumentService musicDocumentService) {
+    public MusicDocumentController(MusicDocumentService musicDocumentService, UserService userService) {
         this.musicDocumentService = musicDocumentService;
+        this.userService = userService;
     }
 
     @GetMapping("")
     public String listOfMusicDocuments(Model model) {
-        model.addAttribute("musicDocuments", musicDocumentService.findAll());
+        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+
+        String googleId = oauth2User.getAttribute("sub");
+        User user = (User) userService.findByGoogleId(googleId);
+        model.addAttribute("musicDocuments", musicDocumentService.findByUser(user));
         return "musicdocuments/read";
     }
 
@@ -59,16 +71,31 @@ public class MusicDocumentController {
 
     @PostMapping("/save")
     public String saveNewMusicDocument(@ModelAttribute MusicDocument musicDocument,
-                                @RequestParam("file") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-        musicDocument.setPdfFile(file.getBytes()); // set your byte[] field
-    }
-        musicDocumentService.save(musicDocument);
-        return "redirect:/musicdocuments";
+                                   @RequestParam("file") MultipartFile file) throws IOException {
+    if (!file.isEmpty()) {
+        musicDocument.setPdfFile(file.getBytes());
     }
 
+
+    OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+
+
+    String googleId = oauth2User.getAttribute("sub");
+
+
+    User user = (User) userService.findByGoogleId(googleId);
+
+    musicDocument.setUser(user);
+
+    musicDocumentService.save(musicDocument);
+
+    return "redirect:/musicdocuments";
+}
+
     @PostMapping("/update/{id}")
-public String updateMusicDocument(@PathVariable Long id,
+    public String updateMusicDocument(@PathVariable Long id,
                                   @ModelAttribute MusicDocument musicDocument) {
     Optional<MusicDocument> existing = musicDocumentService.findById(id);
     if (existing.isPresent()) {
