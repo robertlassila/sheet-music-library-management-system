@@ -49,7 +49,6 @@ public class MusicDocumentController {
         MusicDocument doc = musicDocumentService.findById(id)
         .orElseThrow(() -> new RuntimeException("Document not found"));
         model.addAttribute("musicDocument", doc);
-        System.out.println(doc.getPdfFile().length);
         return "musicdocuments/viewsingle";
     }
 
@@ -123,7 +122,7 @@ public class MusicDocumentController {
             .getAuthentication()
             .getPrincipal();
 
-    String googleId = oauth2User.getAttribute("sub");
-    return googleId;
+        String googleId = oauth2User.getAttribute("sub");
+        return googleId;
     }
 }
