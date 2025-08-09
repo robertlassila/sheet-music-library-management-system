@@ -37,12 +37,9 @@ public class MusicDocumentController {
 
     @GetMapping("")
     public String listOfMusicDocuments(Model model) {
-        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
 
-        String googleId = oauth2User.getAttribute("sub");
-        User user = (User) userService.findByGoogleId(googleId);
+        User user = (User) userService.findByGoogleId(getSessionUserGoogleId());
+
         model.addAttribute("musicDocuments", musicDocumentService.findByUser(user));
         return "musicdocuments/read";
     }
@@ -76,19 +73,8 @@ public class MusicDocumentController {
         musicDocument.setPdfFile(file.getBytes());
     }
 
-
-    OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
-
-
-    String googleId = oauth2User.getAttribute("sub");
-
-
-    User user = (User) userService.findByGoogleId(googleId);
-
+    User user = (User) userService.findByGoogleId(getSessionUserGoogleId());
     musicDocument.setUser(user);
-
     musicDocumentService.save(musicDocument);
 
     return "redirect:/musicdocuments";
@@ -100,8 +86,7 @@ public class MusicDocumentController {
     Optional<MusicDocument> existing = musicDocumentService.findById(id);
     if (existing.isPresent()) {
         MusicDocument doc = existing.get();
-
-        // Only update the text fields
+        
         doc.setTitle(musicDocument.getTitle());
         doc.setComposer(musicDocument.getComposer());
         doc.setArranger(musicDocument.getArranger());
@@ -131,5 +116,14 @@ public class MusicDocumentController {
                     "inline; filename=\"" + musicDocument.getTitle().replaceAll("\\s+", "_") + ".pdf\"")
             .contentType(MediaType.APPLICATION_PDF)
             .body(pdfBytes);
+    }
+
+    public String getSessionUserGoogleId() {
+        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+
+    String googleId = oauth2User.getAttribute("sub");
+    return googleId;
     }
 }
