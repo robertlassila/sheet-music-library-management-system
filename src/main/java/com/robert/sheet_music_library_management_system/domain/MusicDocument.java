@@ -2,6 +2,9 @@ package com.robert.sheet_music_library_management_system.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class MusicDocument {
 
@@ -26,6 +29,9 @@ public class MusicDocument {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(mappedBy = "musicDocuments")
+    private Set<Performance> performances = new HashSet<>();
 
     public MusicDocument(Long id, String title, String composer, String arranger, Boolean collection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user) {
         this.id = id;
