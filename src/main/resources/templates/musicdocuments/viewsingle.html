@@ -19,12 +19,20 @@
                  <input id="arranger" th:field="${musicDocument.arranger}" type="text">
              </div>
              <div>
+                 <label for="orchestrator">Orchestrator:</label>
+                 <input id="orchestrator" th:field="${musicDocument.orchestrator}" type="text">
+             </div>
+             <div>
                  <label for="ensemble">Ensemble:</label>
                  <input id="ensemble" th:field="${musicDocument.ensemble}" type="text">
              </div>
              <div>
                  <label for="genre">Genre:</label>
                  <input id="genre" th:field="${musicDocument.genre}" type="text">
+             </div>
+            <div>
+                 <label for="notesAboutDocument">Notes About Document:</label>
+                 <input id="notesAboutDocument" th:field="${musicDocument.notesAboutDocument}" type="text">
              </div>
             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
             <a th:href="@{'/musicdocuments/' + ${musicDocument.id} +'/pdf'}" th:download="${musicDocument.title + '.pdf'}">Download PDF</a>
