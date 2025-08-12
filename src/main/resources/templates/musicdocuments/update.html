@@ -27,6 +27,10 @@
                  <label for="genre">Genre:</label>
                  <input id="genre" th:field="${musicDocument.genre}" type="text">
              </div>
+             <div>
+                 <label for="hasParts">Contains Parts:</label>
+                 <input id="hasParts" th:field="${musicDocument.hasParts}" type="checkbox">
+             </div>
              <button type="submit"><span>Update</span></button>
          </form>
      </div>

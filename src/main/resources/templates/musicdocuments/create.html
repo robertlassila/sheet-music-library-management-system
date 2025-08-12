@@ -27,6 +27,10 @@
                  <label for="genre">Genre:</label>
                  <input id="genre" th:field="${musicDocument.genre}" type="text">
              </div>
+             <div>
+                 <label for="hasParts">Contains Parts:</label>
+                 <input id="hasParts" th:field="${musicDocument.hasParts}" type="checkbox">
+             </div>
              <div class="mb-3">
                  <label for="pdfFile" class="form-label">PDF File *</label>
                  <input type="file" class="form-control" id="pdfFile" name="file" accept=".pdf" required>

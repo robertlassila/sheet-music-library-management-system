@@ -91,6 +91,7 @@ public class MusicDocumentController {
         doc.setArranger(musicDocument.getArranger());
         doc.setEnsemble(musicDocument.getEnsemble());
         doc.setGenre(musicDocument.getGenre());
+        doc.sethasParts(musicDocument.gethasParts());
 
         musicDocumentService.save(doc);
     }

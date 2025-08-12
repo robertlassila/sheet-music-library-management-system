@@ -26,6 +26,10 @@
                  <label for="genre">Genre:</label>
                  <input id="genre" th:field="${musicDocument.genre}" type="text">
              </div>
+             <div>
+                 <label for="hasParts">Contains Parts:</label>
+                 <input id="hasParts" th:field="${musicDocument.hasParts}" type="checkbox">
+             </div>
             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
             <a th:href="@{'/musicdocuments/' + ${musicDocument.id} +'/pdf'}" th:download="${musicDocument.title + '.pdf'}">Download PDF</a>
     </div>
