@@ -17,6 +17,7 @@ public class Performance {
 
     private String venueName;
     private String ensembleName;
+    private String title;
     private LocalDate date;
 
     @ManyToMany
@@ -27,4 +28,39 @@ public class Performance {
     )
     private Set<MusicDocument> musicDocuments = new HashSet<>();
 
+    public String getVenueName() {
+        return venueName;
+    }
+
+    public void setVenueName(String venueName) {
+        this.venueName = venueName;
+    }
+
+    public String getEnsembleName() {
+        return ensembleName;
+    }
+
+    public void setEnsembleName(String ensembleName) {
+        this.ensembleName = ensembleName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
