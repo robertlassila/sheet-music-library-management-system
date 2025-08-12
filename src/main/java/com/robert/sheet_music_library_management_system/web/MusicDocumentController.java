@@ -89,8 +89,10 @@ public class MusicDocumentController {
         doc.setTitle(musicDocument.getTitle());
         doc.setComposer(musicDocument.getComposer());
         doc.setArranger(musicDocument.getArranger());
+        doc.setOrchestrator(musicDocument.getOrchestrator());
         doc.setEnsemble(musicDocument.getEnsemble());
         doc.setGenre(musicDocument.getGenre());
+        doc.setNotesAboutDocument(musicDocument.getNotesAboutDocument());
 
         musicDocumentService.save(doc);
     }

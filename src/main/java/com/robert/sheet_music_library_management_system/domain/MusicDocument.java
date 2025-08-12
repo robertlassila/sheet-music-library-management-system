@@ -12,6 +12,7 @@ public class MusicDocument {
     private String title;
     private String composer;
     private String arranger;
+    private String orchestrator;
     private Boolean collection;
     private Boolean hasParts;
     private Boolean hasScore;
@@ -32,6 +33,7 @@ public class MusicDocument {
         this.title = title;
         this.composer = composer;
         this.arranger = arranger;
+        this.orchestrator = orchestrator;
         this.collection = collection;
         this.hasParts = hasParts;
         this.hasScore = hasScore;
@@ -42,6 +44,14 @@ public class MusicDocument {
     }
 
     public MusicDocument() {
+    }
+
+    public String getOrchestrator() {
+        return orchestrator;
+    }
+
+    public void setOrchestrator(String orchestrator) {
+        this.orchestrator = orchestrator;
     }
 
     public User getUser() {
@@ -140,13 +150,6 @@ public class MusicDocument {
         this.pdfFile = pdfFile;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     @Override
     public String toString() {
@@ -161,7 +164,6 @@ public class MusicDocument {
                 ", ensemble='" + ensemble + '\'' +
                 ", genre='" + genre + '\'' +
                 ", notesAboutDocument='" + notesAboutDocument + '\'' +
-                //", user=" + user +
                 '}';
     }
 }
