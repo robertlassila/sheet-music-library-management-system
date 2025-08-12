@@ -35,6 +35,14 @@
                  <label for="notesAboutDocument">Notes About Document:</label>
                  <input id="notesAboutDocument" th:field="${musicDocument.notesAboutDocument}" type="text">
              </div>
+             <div>
+                 <label for="hasParts">Document Contains Parts:</label>
+                 <input id="hasParts" th:field="${musicDocument.hasParts}" type="checkbox">
+            </div>
+             <div>
+                 <label for="hasScore">Document Contains Score:</label>
+                 <input id="hasScore" th:field="${musicDocument.hasScore}" type="checkbox">
+            </div>
              <div class="mb-3">
                  <label for="pdfFile" class="form-label">PDF File *</label>
                  <input type="file" class="form-control" id="pdfFile" name="file" accept=".pdf" required>
