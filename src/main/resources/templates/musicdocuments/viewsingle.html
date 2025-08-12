@@ -36,11 +36,11 @@
             </div>
             <div>
                  <label for="hasParts">Document Contains Parts:</label>
-                 <input id="hasParts" th:field="${musicDocument.hasParts}" type="checkbox">
+                 <input id="hasParts" th:field="${musicDocument.hasParts}" type="checkbox" onclick="return false;">
             </div>
             <div>
                  <label for="hasScore">Document Contains Score:</label>
-                 <input id="hasScore" th:field="${musicDocument.hasScore}" type="checkbox">
+                 <input id="hasScore" th:field="${musicDocument.hasScore}" type="checkbox" onclick="return false;">
             </div>
             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
             <a th:href="@{'/musicdocuments/' + ${musicDocument.id} +'/pdf'}" th:download="${musicDocument.title + '.pdf'}">Download PDF</a>
