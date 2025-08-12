@@ -2,6 +2,8 @@ package com.robert.sheet_music_library_management_system.service;
 
 import com.robert.sheet_music_library_management_system.domain.User;
 import com.robert.sheet_music_library_management_system.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -41,6 +43,15 @@ public class UserService {
             user = users.get(0);
         }
         return user;
+    }
+
+    public String getSessionUserGoogleId() {
+        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+
+        String googleId = oauth2User.getAttribute("sub");
+        return googleId;
     }
 
 }

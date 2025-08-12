@@ -1,5 +1,6 @@
 package com.robert.sheet_music_library_management_system.service;
 
+import com.robert.sheet_music_library_management_system.domain.MusicDocument;
 import com.robert.sheet_music_library_management_system.domain.Performance;
 import com.robert.sheet_music_library_management_system.domain.User;
 import com.robert.sheet_music_library_management_system.repository.PerformanceRepository;
@@ -33,6 +34,10 @@ public class PerformanceService {
 
     public Optional<Performance> findById(Long id) {
         return performanceRepository.findById(id);
+    }
+
+    public List<Performance> findByUser(User user) {
+        return performanceRepository.findByUser(user);
     }
 
 

@@ -38,7 +38,7 @@ public class MusicDocumentController {
     @GetMapping("")
     public String listOfMusicDocuments(Model model) {
 
-        User user = (User) userService.findByGoogleId(getSessionUserGoogleId());
+        User user = (User) userService.findByGoogleId(userService.getSessionUserGoogleId());
 
         model.addAttribute("musicDocuments", musicDocumentService.findByUser(user));
         return "musicdocuments/read";
@@ -72,7 +72,7 @@ public class MusicDocumentController {
         musicDocument.setPdfFile(file.getBytes());
     }
 
-    User user = (User) userService.findByGoogleId(getSessionUserGoogleId());
+    User user = (User) userService.findByGoogleId(userService.getSessionUserGoogleId());
     musicDocument.setUser(user);
     musicDocumentService.save(musicDocument);
 
@@ -122,12 +122,4 @@ public class MusicDocumentController {
             .body(pdfBytes);
     }
 
-    public String getSessionUserGoogleId() {
-        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
-
-        String googleId = oauth2User.getAttribute("sub");
-        return googleId;
-    }
 }

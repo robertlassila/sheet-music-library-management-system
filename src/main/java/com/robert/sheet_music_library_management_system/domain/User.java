@@ -21,6 +21,19 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MusicDocument> musicDocuments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Performance> performances = new ArrayList<>();
+
+    public void addPerformance(Performance doc) {
+        performances.add(doc);
+        doc.setUser(this);
+    }
+
+    public void removePerformance(Performance doc) {
+        performances.remove(doc);
+        doc.setUser(null);
+    }
+
     public void addMusicDocument(MusicDocument doc) {
         musicDocuments.add(doc);
         doc.setUser(this);

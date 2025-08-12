@@ -24,9 +24,20 @@ public class Performance {
     @JoinTable(
         name = "performance_music_document",
         joinColumns = @JoinColumn(name = "performance_id"),
-        inverseJoinColumns = @JoinColumn(name = "music_document_id")
-    )
+        inverseJoinColumns = @JoinColumn(name = "music_document_id"))
     private Set<MusicDocument> musicDocuments = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getVenueName() {
         return venueName;
