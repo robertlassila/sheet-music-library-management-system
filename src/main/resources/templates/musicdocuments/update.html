@@ -43,6 +43,10 @@
                  <label for="hasScore">Document Contains Score:</label>
                  <input id="hasScore" th:field="${musicDocument.hasScore}" type="checkbox">
             </div>
+             <div>
+                 <label for="collection">Document Contains Multiple Pieces:</label>
+                 <input id="collection" th:field="${musicDocument.collection}" type="checkbox">
+            </div>
              <button type="submit"><span>Update</span></button>
          </form>
      </div>
