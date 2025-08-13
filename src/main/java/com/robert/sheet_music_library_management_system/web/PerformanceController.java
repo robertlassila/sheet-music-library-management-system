@@ -62,14 +62,13 @@ public class PerformanceController {
     }
 
     @PostMapping("/save")
-    public String saveNewPerformance(@ModelAttribute Performance performance,
-                                     @RequestParam("file") MultipartFile file) throws IOException {
+    public String saveNewPerformance(@ModelAttribute Performance performance) throws IOException {
 
         User user = (User) userService.findByGoogleId(userService.getSessionUserGoogleId());
         performance.setUser(user);
         performanceService.save(performance);
 
-        return "redirect:/performance";
+        return "redirect:/musicdocuments";
     }
 
     @PostMapping("/update/{id}")
