@@ -2,8 +2,11 @@ package com.robert.sheet_music_library_management_system.web;
 
 import com.nimbusds.jose.util.Resource;
 import com.robert.sheet_music_library_management_system.domain.MusicDocument;
+import com.robert.sheet_music_library_management_system.domain.Performance;
 import com.robert.sheet_music_library_management_system.domain.User;
+import com.robert.sheet_music_library_management_system.repository.PerformanceRepository;
 import com.robert.sheet_music_library_management_system.service.MusicDocumentService;
+import com.robert.sheet_music_library_management_system.service.PerformanceService;
 import com.robert.sheet_music_library_management_system.service.UserService;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,11 +32,15 @@ public class MusicDocumentController {
 
     private final MusicDocumentService musicDocumentService;
     private final UserService userService;
+    private final PerformanceService performanceService;
+    private final PerformanceRepository performanceRepository;
 
 
-    public MusicDocumentController(MusicDocumentService musicDocumentService, UserService userService) {
+    public MusicDocumentController(MusicDocumentService musicDocumentService, UserService userService, PerformanceService performanceService, PerformanceRepository performanceRepository) {
         this.musicDocumentService = musicDocumentService;
         this.userService = userService;
+        this.performanceService = performanceService;
+        this.performanceRepository = performanceRepository;
     }
 
     @GetMapping("")
@@ -47,8 +55,11 @@ public class MusicDocumentController {
     @GetMapping("/{id}")
     public String singleMusicDocument(Model model, @PathVariable Long id) {
         MusicDocument doc = musicDocumentService.findById(id)
-        .orElseThrow(() -> new RuntimeException("Document not found"));
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+        List<Performance> performances = performanceRepository.findByMusicDocumentsContains(doc);
+
         model.addAttribute("musicDocument", doc);
+        model.addAttribute("performances", performances);
         return "musicdocuments/viewsingle";
     }
 
@@ -121,5 +132,32 @@ public class MusicDocumentController {
             .contentType(MediaType.APPLICATION_PDF)
             .body(pdfBytes);
     }
+
+    @GetMapping("/{id}/addperformance")
+    public String addPerformance(Model model, @PathVariable Long id) {
+        MusicDocument musicDocument = musicDocumentService.findById(id)
+        .orElseThrow(() -> new RuntimeException("Music Document not found"));
+
+        List<Performance> performances = performanceService.findByUser(userService.findByGoogleId(userService.getSessionUserGoogleId()));
+
+        model.addAttribute("performances", performances);
+        model.addAttribute("musicDocument", musicDocument);
+
+        return "performance/readforaddingtodocument";
+    }
+
+    @PostMapping("/{docId}/addperformance/{perfId}")
+    public String addPerformanceToDocument(@PathVariable Long docId, @PathVariable Long perfId) {
+        MusicDocument musicDocument = musicDocumentService.findById(docId)
+            .orElseThrow(() -> new RuntimeException("Music Document not found"));
+        Performance performance = performanceService.findById(perfId)
+            .orElseThrow(() -> new RuntimeException("Performance not found"));
+
+        musicDocument.getPerformances().add(performance);
+        musicDocumentService.save(musicDocument);
+
+        return "redirect:/musicdocuments/{docId}";
+    }
+
 
 }

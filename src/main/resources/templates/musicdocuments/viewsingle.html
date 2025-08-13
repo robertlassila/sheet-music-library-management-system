@@ -48,6 +48,29 @@
             </div>
             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
             <a th:href="@{'/musicdocuments/' + ${musicDocument.id} +'/pdf'}" th:download="${musicDocument.title + '.pdf'}">Download PDF</a>
+            <div>
+                <h2>Performances</h2>
+                <a th:href="@{/musicdocuments/{id}/addperformance(id=${musicDocument.id})}">Add Performance</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Venue</th>
+                    <th>Ensemble</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="performance : ${performances}">
+                    <td th:text="${performance.venueName}">Venue</td>
+                    <td th:text="${performance.ensembleName}">Ensemble</td>
+                    <td th:text="${performance.title}">Title</td>
+                    <td th:text="${performance.date}">Date</td>
+
+                </tr>
+            </tbody>
+        </table>
+            </div>
     </div>
 
 </body>

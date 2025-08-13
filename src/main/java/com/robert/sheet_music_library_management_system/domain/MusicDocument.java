@@ -31,7 +31,11 @@ public class MusicDocument {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "musicDocuments")
+    @ManyToMany
+    @JoinTable(
+    name = "music_document_performance",
+    joinColumns = @JoinColumn(name = "music_document_id"),
+    inverseJoinColumns = @JoinColumn(name = "performance_id"))
     private Set<Performance> performances = new HashSet<>();
 
     public MusicDocument(Long id, String title, String composer, String arranger, Boolean collection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user) {
@@ -50,6 +54,14 @@ public class MusicDocument {
     }
 
     public MusicDocument() {
+    }
+
+    public Set<Performance> getPerformances() {
+        return performances;
+    }
+
+    public void setPerformances(Set<Performance> performances) {
+        this.performances = performances;
     }
 
     public String getOrchestrator() {

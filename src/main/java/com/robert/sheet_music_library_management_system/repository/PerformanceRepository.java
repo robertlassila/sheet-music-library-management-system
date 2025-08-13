@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface PerformanceRepository extends JpaRepository<Performance, Long> {
     List<Performance> findByUser(User user);
+    List<Performance> findByMusicDocumentsContains(MusicDocument musicDocument);
 }

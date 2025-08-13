@@ -90,6 +90,8 @@ public class PerformanceController {
         return "redirect:/performance";
     }
 
+
+
 //    @GetMapping("/{id}/pdf")
 //    public ResponseEntity<byte[]> getPerformancePdf(@PathVariable Long id) {
 //        Performance performance = performanceService.findById(id)

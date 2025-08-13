@@ -20,11 +20,7 @@ public class Performance {
     private String title;
     private LocalDate date;
 
-    @ManyToMany
-    @JoinTable(
-        name = "performance_music_document",
-        joinColumns = @JoinColumn(name = "performance_id"),
-        inverseJoinColumns = @JoinColumn(name = "music_document_id"))
+    @ManyToMany(mappedBy = "performances")
     private Set<MusicDocument> musicDocuments = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
