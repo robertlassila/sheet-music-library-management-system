@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layout :: layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<body>
+     <div th:fragment="content">
+         <form action="save" method="post" enctype="multipart/form-data">
+             <div>
+                 <label for="venueName">Venue Name:</label>
+                 <input id="venueName" th:field="${performance.venueName}" type="text">
+             </div>
+             <div>
+                 <label for="ensembleName">Ensemble Name:</label>
+                 <input id="ensembleName" th:field="${performance.ensembleName}" type="text">
+             </div>
+             <div>
+                 <label for="title">Title:</label>
+                 <input id="title" th:field="${performance.title}" type="text">
+             </div>
+             <div>
+                 <label for="date">Date:</label>
+                 <input id="date" th:field="${performance.date}" type="date">
+             </div>
+             <button type="submit"><span>Create</span></button>
+         </form>
+     </div>
+</body>
+</html>
