@@ -71,6 +71,8 @@ public class PerformanceController {
         return "redirect:/musicdocuments";
     }
 
+
+
     @PostMapping("/update/{id}")
     public String updatePerformance(@PathVariable Long id,
                                     @ModelAttribute Performance performance) {
