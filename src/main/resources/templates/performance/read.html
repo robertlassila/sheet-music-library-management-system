@@ -13,6 +13,7 @@
                     <th>Ensemble</th>
                     <th>Title</th>
                     <th>Date</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -21,10 +22,12 @@
                     <td th:text="${performance.ensembleName}">Ensemble</td>
                     <td th:text="${performance.title}">Title</td>
                     <td th:text="${performance.date}">Date</td>
-
+                    <td><a th:href="@{performance/{id}(id=${performance.id})}" target="_self"
+                                       rel="noopener noreferrer">View Documents</a></td>
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/performance/create}">Create New</a>
     </div>
 </body>
 </html>

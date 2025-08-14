@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="content">
+            <div>
+                 <label for="venueName">Venue Name:</label>
+                 <input id="venueName" th:field="${performance.venueName}" type="text">
+             </div>
+            <div>
+                 <label for="ensembleName">Ensemble Name:</label>
+                 <input id="ensembleName" th:field="${performance.ensembleName}" type="text">
+             </div>
+            <div>
+                 <label for="title">Title:</label>
+                 <input id="title" th:field="${performance.title}" type="text">
+             </div>
+            <div>
+                 <label for="date">Date:</label>
+                 <input id="date" th:field="${performance.date}" type="text">
+             </div>
+
+            <div>
+                <h2>Documents</h2>
+                <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Composer</th>
+                    <th>Ensemble</th>
+                    <th>Genre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="musicDocument : ${musicDocuments}">
+                    <td><a th:href="@{/musicdocuments/{id}(id=${musicDocument.id})}" th:text="${musicDocument.title}" target="_self"
+                                       rel="noopener noreferrer"></a></td>
+                    <td th:text="${musicDocument.composer}">Composer</td>
+                    <td th:text="${musicDocument.ensemble}">Ensemble</td>
+                    <td th:text="${musicDocument.genre}">Genre</td>
+                </tr>
+            </tbody>
+        </table>
+            </div>
+    </div>
+
+</body>
+</html>

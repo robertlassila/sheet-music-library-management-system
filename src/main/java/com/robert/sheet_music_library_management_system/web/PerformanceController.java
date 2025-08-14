@@ -1,5 +1,6 @@
 package com.robert.sheet_music_library_management_system.web;
 
+import com.robert.sheet_music_library_management_system.domain.MusicDocument;
 import com.robert.sheet_music_library_management_system.domain.Performance;
 import com.robert.sheet_music_library_management_system.domain.User;
 import com.robert.sheet_music_library_management_system.service.PerformanceService;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/performance")
@@ -42,9 +44,13 @@ public class PerformanceController {
 
     @GetMapping("/{id}")
     public String singlePerformance(Model model, @PathVariable Long id) {
-        Performance doc = performanceService.findById(id)
+        Performance performance = performanceService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Document not found"));
-        model.addAttribute("performance", doc);
+
+        Set<MusicDocument> musicDocuments = performance.getMusicDocuments();
+
+        model.addAttribute("musicDocuments", musicDocuments);
+        model.addAttribute("performance", performance);
         return "performance/viewsingle";
     }
 
@@ -68,7 +74,7 @@ public class PerformanceController {
         performance.setUser(user);
         performanceService.save(performance);
 
-        return "redirect:/musicdocuments";
+        return "redirect:/performance";
     }
 
 

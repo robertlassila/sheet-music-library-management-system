@@ -70,4 +70,12 @@ public class Performance {
     public Long getId() {
         return id;
     }
+
+    public Set<MusicDocument> getMusicDocuments() {
+        return musicDocuments;
+    }
+
+    public void setMusicDocuments(Set<MusicDocument> musicDocuments) {
+        this.musicDocuments = musicDocuments;
+    }
 }
