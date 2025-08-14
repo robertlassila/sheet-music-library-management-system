@@ -156,6 +156,9 @@ public class MusicDocumentController {
         musicDocument.getPerformances().add(performance);
         musicDocumentService.save(musicDocument);
 
+        performance.getMusicDocuments().add(musicDocument);
+        performanceService.save(performance);
+
         return "redirect:/musicdocuments/{docId}";
     }
 
