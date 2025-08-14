@@ -36,10 +36,10 @@
             </thead>
             <tbody>
                 <tr th:each="musicDocument : ${musicDocuments}">
-                    <td th:text="${performance.venueName}">Title</td>
-                    <td th:text="${performance.ensembleName}">Composer</td>
-                    <td th:text="${performance.title}">Ensemble</td>
-                    <td th:text="${performance.date}">Genre</td>
+                    <td th:text="${musicDocument.title}">Title</td>
+                    <td th:text="${musicDocument.composer}">Composer</td>
+                    <td th:text="${musicDocument.ensemble}">Ensemble</td>
+                    <td th:text="${musicDocument.genre}">Genre</td>
                 </tr>
             </tbody>
         </table>
