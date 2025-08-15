@@ -16,7 +16,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/save", "/musicdocuments/**", "/css/**", "/js/**").permitAll();
+                    auth.requestMatchers("/", "/save", "/css/**", "/js/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .csrf(csrf -> csrf.disable())
