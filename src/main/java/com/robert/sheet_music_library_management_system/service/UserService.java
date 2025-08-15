@@ -36,22 +36,21 @@ public class UserService {
     }
 
 
-    public User findByGoogleId(String googleId) {
+    public User findByGoogleId() {
+        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+
+        String googleId = oauth2User.getAttribute("sub");
+
+
+
         List<User> users = userRepository.findByGoogleId(googleId);
         User user = new User();
         if (!users.isEmpty()) {
             user = users.get(0);
         }
         return user;
-    }
-
-    public String getSessionUserGoogleId() {
-        OAuth2User oauth2User = (OAuth2User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
-
-        String googleId = oauth2User.getAttribute("sub");
-        return googleId;
     }
 
 }
