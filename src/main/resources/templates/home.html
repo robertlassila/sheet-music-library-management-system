@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<div th:fragment="content">
+    <div class="text-center mt-5">
+        <h1>Welcome to Sheet Music Library</h1>
+        <p class="lead">Sign in to access your sheet music collection.</p>
+        <a class="btn btn-primary btn-lg" href="/oauth2/authorization/google">
+            Sign in with Google
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

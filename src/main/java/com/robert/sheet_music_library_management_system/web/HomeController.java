@@ -24,7 +24,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "redirect:/musicdocuments";
+        return "home";
     }
 
     @GetMapping("/secured")
