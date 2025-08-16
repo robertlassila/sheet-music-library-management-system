@@ -46,7 +46,7 @@ public class MusicDocumentController {
     @GetMapping("")
     public String listOfMusicDocuments(Model model) {
 
-        User user = (User) userService.findByGoogleId(userService.getSessionUserGoogleId());
+        User user = (User) userService.findByGoogleId();
 
         model.addAttribute("musicDocuments", musicDocumentService.findByUser(user));
         return "musicdocuments/read";
@@ -83,7 +83,7 @@ public class MusicDocumentController {
         musicDocument.setPdfFile(file.getBytes());
     }
 
-    User user = (User) userService.findByGoogleId(userService.getSessionUserGoogleId());
+    User user = (User) userService.findByGoogleId();
     musicDocument.setUser(user);
     musicDocumentService.save(musicDocument);
 
@@ -138,7 +138,7 @@ public class MusicDocumentController {
         MusicDocument musicDocument = musicDocumentService.findById(id)
         .orElseThrow(() -> new RuntimeException("Music Document not found"));
 
-        List<Performance> performances = performanceService.findByUser(userService.findByGoogleId(userService.getSessionUserGoogleId()));
+        List<Performance> performances = performanceService.findByUser(userService.findByGoogleId());
 
         model.addAttribute("performances", performances);
         model.addAttribute("musicDocument", musicDocument);
