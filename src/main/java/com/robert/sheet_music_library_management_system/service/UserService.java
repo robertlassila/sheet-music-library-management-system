@@ -43,7 +43,15 @@ public class UserService {
 
         String googleId = oauth2User.getAttribute("sub");
 
+        List<User> users = userRepository.findByGoogleId(googleId);
+        User user = new User();
+        if (!users.isEmpty()) {
+            user = users.get(0);
+        }
+        return user;
+    }
 
+    public User findByGoogleId(String googleId) {
 
         List<User> users = userRepository.findByGoogleId(googleId);
         User user = new User();
