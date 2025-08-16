@@ -104,9 +104,9 @@ public class MusicDocumentController {
         doc.setEnsemble(musicDocument.getEnsemble());
         doc.setGenre(musicDocument.getGenre());
         doc.setNotesAboutDocument(musicDocument.getNotesAboutDocument());
-        doc.sethasParts(musicDocument.gethasParts());
-        doc.sethasScore(musicDocument.gethasScore());
-        doc.setCollection(musicDocument.getCollection());
+        doc.setHasParts(musicDocument.getHasParts());
+        doc.setHasScore(musicDocument.getHasScore());
+        doc.setIsCollection(musicDocument.getIsCollection());
 
         musicDocumentService.save(doc);
     }
