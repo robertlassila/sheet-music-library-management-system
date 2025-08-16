@@ -36,7 +36,7 @@ public class PerformanceController {
     @GetMapping("")
     public String listOfPerformances(Model model) {
 
-        User user = (User) userService.findByGoogleId(userService.getSessionUserGoogleId());
+        User user = (User) userService.findByGoogleId();
 
         model.addAttribute("performances", performanceService.findByUser(user));
         return "performance/read";
@@ -70,7 +70,7 @@ public class PerformanceController {
     @PostMapping("/save")
     public String saveNewPerformance(@ModelAttribute Performance performance) throws IOException {
 
-        User user = (User) userService.findByGoogleId(userService.getSessionUserGoogleId());
+        User user = (User) userService.findByGoogleId();
         performance.setUser(user);
         performanceService.save(performance);
 
