@@ -43,8 +43,8 @@
                  <input id="hasScore" th:field="${musicDocument.hasScore}" type="checkbox" onclick="return false;">
             </div>
             <div>
-                 <label for="collection">Document Contains Multiple Pieces:</label>
-                 <input id="collection" th:field="${musicDocument.collection}" type="checkbox" onclick="return false;">
+                 <label for="isCollection">Document Contains Multiple Pieces:</label>
+                 <input id="isCollection" th:field="${musicDocument.isCollection}" type="checkbox" onclick="return false;">
             </div>
             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
             <a th:href="@{'/musicdocuments/' + ${musicDocument.id} +'/pdf'}" th:download="${musicDocument.title + '.pdf'}">Download PDF</a>

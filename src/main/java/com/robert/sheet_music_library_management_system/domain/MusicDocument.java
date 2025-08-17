@@ -16,7 +16,7 @@ public class MusicDocument {
     private String composer;
     private String arranger;
     private String orchestrator;
-    private Boolean collection;
+    private Boolean isCollection;
     private Boolean hasParts;
     private Boolean hasScore;
     private String ensemble;
@@ -38,13 +38,13 @@ public class MusicDocument {
     inverseJoinColumns = @JoinColumn(name = "performance_id"))
     private Set<Performance> performances = new HashSet<>();
 
-    public MusicDocument(Long id, String title, String composer, String arranger, Boolean collection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user) {
+    public MusicDocument(Long id, String title, String composer, String arranger, Boolean isCollection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user) {
         this.id = id;
         this.title = title;
         this.composer = composer;
         this.arranger = arranger;
         this.orchestrator = orchestrator;
-        this.collection = collection;
+        this.isCollection = isCollection;
         this.hasParts = hasParts;
         this.hasScore = hasScore;
         this.ensemble = ensemble;
@@ -112,27 +112,27 @@ public class MusicDocument {
         this.arranger = arranger;
     }
 
-    public Boolean getCollection() {
-        return collection;
+    public Boolean getIsCollection() {
+        return isCollection;
     }
 
-    public void setCollection(Boolean collection) {
-        this.collection = collection;
+    public void setIsCollection(Boolean isCollection) {
+        this.isCollection = isCollection;
     }
 
-    public Boolean gethasParts() {
+    public Boolean getHasParts() {
         return hasParts;
     }
 
-    public void sethasParts(Boolean hasParts) {
+    public void setHasParts(Boolean hasParts) {
         this.hasParts = hasParts;
     }
 
-    public Boolean gethasScore() {
+    public Boolean getHasScore() {
         return hasScore;
     }
 
-    public void sethasScore(Boolean hasScore) {
+    public void setHasScore(Boolean hasScore) {
         this.hasScore = hasScore;
     }
 
@@ -176,7 +176,7 @@ public class MusicDocument {
                 ", title='" + title + '\'' +
                 ", composer='" + composer + '\'' +
                 ", arranger='" + arranger + '\'' +
-                ", collection=" + collection +
+                ", isCollection=" + isCollection +
                 ", hasParts=" + hasParts +
                 ", hasScore=" + hasScore +
                 ", ensemble='" + ensemble + '\'' +
