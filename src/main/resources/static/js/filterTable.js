@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 composer.includes(filterValue) ||
                 ensemble.includes(filterValue) ||
                 genre.includes(filterValue)) {
-                row.style.display = ""; // show row
+                row.style.display = "";
             } else {
-                row.style.display = "none"; // hide row
+                row.style.display = "none";
             }
         });
     });
