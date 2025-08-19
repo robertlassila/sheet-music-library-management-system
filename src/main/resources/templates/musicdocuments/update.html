@@ -49,6 +49,10 @@
             </div>
              <button type="submit"><span>Update</span></button>
          </form>
+         <form th:action="@{/musicdocuments/delete}" method="post">
+             <input th:field="${musicDocument.id}" type="hidden"/>
+             <button type="submit"><span>Delete</span></button>
+         </form>
      </div>
 </body>
 </html>
