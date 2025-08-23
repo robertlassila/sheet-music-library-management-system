@@ -2,9 +2,11 @@ package com.robert.sheet_music_library_management_system.service;
 
 import com.robert.sheet_music_library_management_system.domain.MusicDocument;
 import com.robert.sheet_music_library_management_system.domain.User;
+import com.robert.sheet_music_library_management_system.dto.MusicDocumentDTO;
 import com.robert.sheet_music_library_management_system.repository.MusicDocumentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,22 @@ public class MusicDocumentService {
 
     public List<MusicDocument> findByUser(User user) {
         return musicDocumentRepository.findByUser(user);
+    }
+
+    public List<MusicDocumentDTO> findByUserAsDTOs(User user) {
+        List<MusicDocumentDTO> dtos = new ArrayList<>();
+        List<MusicDocument> musicDocuments = findByUser(user);
+
+        for (MusicDocument musicDocument : musicDocuments) {
+            MusicDocumentDTO dto = new MusicDocumentDTO();
+            dto.setId(musicDocument.getId());
+            dto.setComposer(musicDocument.getComposer());
+            dto.setGenre(musicDocument.getGenre());
+            dto.setTitle(musicDocument.getTitle());
+            dto.setEnsemble(musicDocument.getEnsemble());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
 

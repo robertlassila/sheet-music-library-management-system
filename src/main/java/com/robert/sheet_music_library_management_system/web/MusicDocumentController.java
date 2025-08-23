@@ -48,7 +48,7 @@ public class MusicDocumentController {
 
         User user = (User) userService.findByGoogleId();
 
-        model.addAttribute("musicDocuments", musicDocumentService.findByUser(user));
+        model.addAttribute("musicDocuments", musicDocumentService.findByUserAsDTOs(user));
         return "musicdocuments/read";
     }
 
@@ -71,7 +71,12 @@ public class MusicDocumentController {
 
     @GetMapping("/update/{id}")
     public String fetch(ModelMap model, @PathVariable Long id) {
-        musicDocumentService.findById(id).ifPresent(doc -> model.addAttribute("musicDocument", doc));
+        MusicDocument doc = musicDocumentService.findById(id)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+        List<Performance> performances = performanceRepository.findByMusicDocumentsContains(doc);
+
+        model.addAttribute("musicDocument", doc);
+        model.addAttribute("performances", performances);
 
         return "musicdocuments/update";
     }
