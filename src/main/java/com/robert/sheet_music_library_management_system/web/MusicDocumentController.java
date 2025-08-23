@@ -48,7 +48,7 @@ public class MusicDocumentController {
 
         User user = (User) userService.findByGoogleId();
 
-        model.addAttribute("musicDocuments", musicDocumentService.findByUser(user));
+        model.addAttribute("musicDocuments", musicDocumentService.findByUserAsDTOs(user));
         return "musicdocuments/read";
     }
 
