@@ -22,7 +22,9 @@ public class MusicDocumentService {
     }
 
     public MusicDocument save(MusicDocument musicDocument) {
-
+        if (musicDocument.getDateTimeOfEntry() == null) {
+            musicDocument.setDateTimeOfEntry();
+        }
         return musicDocumentRepository.save(musicDocument);
     }
 
