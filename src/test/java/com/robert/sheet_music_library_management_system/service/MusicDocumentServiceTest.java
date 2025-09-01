@@ -67,7 +67,7 @@ public class MusicDocumentServiceTest {
         LocalDateTime now = LocalDateTime.now();
         assertTrue(musicDocument1.getDateTimeOfEntry().isBefore(now));
 
-        musicDocumentService.save(musicDocument1); //making sure service logic makes it not update
+        musicDocumentService.save(musicDocument1);
         assertTrue(musicDocument1.getDateTimeOfEntry().isBefore(now));
     }
 
