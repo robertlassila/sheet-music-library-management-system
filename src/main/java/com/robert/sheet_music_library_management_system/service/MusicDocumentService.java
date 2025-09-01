@@ -49,6 +49,9 @@ public class MusicDocumentService {
         List<MusicDocumentDTO> dtos = new ArrayList<>();
         List<MusicDocument> musicDocuments = findByUser(user);
 
+        for (MusicDocument musicDocument : musicDocuments) {
+            save(musicDocument);
+        }
         musicDocuments.sort(Comparator.comparing(MusicDocument::getDateTimeOfEntry));
 
         for (MusicDocument musicDocument : musicDocuments) {
@@ -60,6 +63,7 @@ public class MusicDocumentService {
             dto.setEnsemble(musicDocument.getEnsemble());
             dtos.add(dto);
         }
+
         return dtos;
     }
 
