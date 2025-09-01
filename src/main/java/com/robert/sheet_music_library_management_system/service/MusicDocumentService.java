@@ -7,6 +7,7 @@ import com.robert.sheet_music_library_management_system.repository.MusicDocument
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,9 @@ public class MusicDocumentService {
     }
 
     public MusicDocument save(MusicDocument musicDocument) {
-
+        if (musicDocument.getDateTimeOfEntry() == null) {
+            musicDocument.setDateTimeOfEntry();
+        }
         return musicDocumentRepository.save(musicDocument);
     }
 
@@ -45,6 +48,8 @@ public class MusicDocumentService {
     public List<MusicDocumentDTO> findByUserAsDTOs(User user) {
         List<MusicDocumentDTO> dtos = new ArrayList<>();
         List<MusicDocument> musicDocuments = findByUser(user);
+
+        musicDocuments.sort(Comparator.comparing(MusicDocument::getDateTimeOfEntry));
 
         for (MusicDocument musicDocument : musicDocuments) {
             MusicDocumentDTO dto = new MusicDocumentDTO();
