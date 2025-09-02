@@ -6,7 +6,7 @@
 </head>
 <body>
      <div th:fragment="content">
-         <form action="uploadpdf" method="post" enctype="multipart/form-data">
+         <form th:action="@{/musicdocuments/uploadpdf}" method="post" enctype="multipart/form-data">
              <div class="mb-3">
                  <label for="pdfFile" class="form-label">PDF File *</label>
                  <input type="file" class="form-control" id="pdfFile" name="file" accept=".pdf" required>

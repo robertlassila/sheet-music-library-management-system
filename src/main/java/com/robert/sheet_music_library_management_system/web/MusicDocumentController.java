@@ -72,9 +72,16 @@ public class MusicDocumentController {
     @PostMapping("/uploadpdf")
     public String uploadPdf(@RequestParam("file") MultipartFile file,
                             @ModelAttribute MusicDocument musicDocument) throws IOException {
+        if (!file.isEmpty()) {
         musicDocument.setPdfFile(file.getBytes());
+        }
 
-        return "redirect:/musicdocuments/create";
+        User user = (User) userService.findByGoogleId();
+        musicDocument.setUser(user);
+        MusicDocument saved = musicDocumentService.save(musicDocument);
+
+
+        return "redirect:/musicdocuments/update/" + saved.getId();
     }
 
 
@@ -108,7 +115,7 @@ public class MusicDocumentController {
     musicDocumentService.save(musicDocument);
 
     return "redirect:/musicdocuments";
-}
+    }
 
     @PostMapping("/update/{id}")
     public String updateMusicDocument(@PathVariable Long id,
@@ -140,18 +147,27 @@ public class MusicDocumentController {
     }
 
     @GetMapping("/{id}/pdf")
-    public ResponseEntity<byte[]> getMusicDocumentPdf(@PathVariable Long id) {
+public ResponseEntity<byte[]> getMusicDocumentPdf(@PathVariable Long id) {
     MusicDocument musicDocument = musicDocumentService.findById(id)
-            .orElseThrow(() -> new RuntimeException("Sheet music not found"));
+        .orElseThrow(() -> new RuntimeException("Sheet music not found"));
 
     byte[] pdfBytes = musicDocument.getPdfFile();
 
+    if (pdfBytes == null) {
+        throw new RuntimeException("PDF not found");
+    }
+
+    // Safe file name
+    String fileName = (musicDocument.getTitle() != null && !musicDocument.getTitle().isEmpty())
+            ? musicDocument.getTitle().replaceAll("\\s+", "_")
+            : "document-" + musicDocument.getId();
+
     return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION,
-                    "inline; filename=\"" + musicDocument.getTitle().replaceAll("\\s+", "_") + ".pdf\"")
+                    "inline; filename=\"" + fileName + ".pdf\"")
             .contentType(MediaType.APPLICATION_PDF)
             .body(pdfBytes);
-    }
+}
 
     @GetMapping("/{id}/addperformance")
     public String addPerformance(Model model, @PathVariable Long id) {

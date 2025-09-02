@@ -47,7 +47,9 @@
                  <label for="isCollection">Document Contains Multiple Pieces:</label>
                  <input id="isCollection" th:field="${musicDocument.isCollection}" type="checkbox">
             </div>
-             <button type="submit"><span>Update</span></button>
+             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
+
+             <button type="submit"><span>Save</span></button>
          </form>
          <div>
                 <h2>Performances</h2>
