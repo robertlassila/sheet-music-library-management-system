@@ -63,9 +63,24 @@ public class MusicDocumentController {
         return "musicdocuments/viewsingle";
     }
 
-    @GetMapping("/create")
-    public String newMusicDocument(Model model) {
+    @GetMapping("/uploadpdf")
+    public String uploadPdf(Model model) {
         model.addAttribute("musicDocument", new MusicDocument());
+        return "musicdocuments/uploadpdf";
+    }
+
+    @PostMapping("/uploadpdf")
+    public String uploadPdf(@RequestParam("file") MultipartFile file,
+                            @ModelAttribute MusicDocument musicDocument) throws IOException {
+        musicDocument.setPdfFile(file.getBytes());
+
+        return "redirect:/musicdocuments/create";
+    }
+
+
+    @GetMapping("/create")
+    public String newMusicDocument(Model model, MusicDocument musicDocument) {
+        model.addAttribute("musicDocument", musicDocument);
         return "musicdocuments/create";
     }
 
