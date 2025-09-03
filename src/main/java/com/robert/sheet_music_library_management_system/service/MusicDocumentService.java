@@ -5,6 +5,7 @@ import com.robert.sheet_music_library_management_system.domain.User;
 import com.robert.sheet_music_library_management_system.dto.MusicDocumentDTO;
 import com.robert.sheet_music_library_management_system.repository.MusicDocumentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -65,6 +66,12 @@ public class MusicDocumentService {
         }
 
         return dtos;
+    }
+
+    public String makeTitleFromFileName(String fileName) {
+
+        String baseName = fileName.replaceFirst("[.][^.]+$", "");
+        return baseName;
     }
 
 

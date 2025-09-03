@@ -76,11 +76,13 @@ public class MusicDocumentController {
         musicDocument.setPdfFile(file.getBytes());
         }
 
+
+        musicDocument.setTitle(musicDocumentService.makeTitleFromFileName(file.getOriginalFilename()));
+
         User user = (User) userService.findByGoogleId();
         musicDocument.setUser(user);
         MusicDocument saved = musicDocumentService.save(musicDocument);
-
-
+        
         return "redirect:/musicdocuments/update/" + saved.getId();
     }
 
@@ -136,9 +138,9 @@ public class MusicDocumentController {
         doc.setIsCollection(musicDocument.getIsCollection());
 
         musicDocumentService.save(doc);
-    }
+        }
     return "redirect:/musicdocuments";
-}
+    }
 
     @PostMapping("/delete")
     public String deleteNewMusicDocument(@ModelAttribute MusicDocument musicDocument) {
@@ -147,27 +149,27 @@ public class MusicDocumentController {
     }
 
     @GetMapping("/{id}/pdf")
-public ResponseEntity<byte[]> getMusicDocumentPdf(@PathVariable Long id) {
-    MusicDocument musicDocument = musicDocumentService.findById(id)
-        .orElseThrow(() -> new RuntimeException("Sheet music not found"));
+    public ResponseEntity<byte[]> getMusicDocumentPdf(@PathVariable Long id) {
+        MusicDocument musicDocument = musicDocumentService.findById(id)
+            .orElseThrow(() -> new RuntimeException("Sheet music not found"));
 
-    byte[] pdfBytes = musicDocument.getPdfFile();
+        byte[] pdfBytes = musicDocument.getPdfFile();
 
-    if (pdfBytes == null) {
-        throw new RuntimeException("PDF not found");
-    }
+        if (pdfBytes == null) {
+            throw new RuntimeException("PDF not found");
+        }
 
-    // Safe file name
-    String fileName = (musicDocument.getTitle() != null && !musicDocument.getTitle().isEmpty())
+        // Safe file name
+        String fileName = (musicDocument.getTitle() != null && !musicDocument.getTitle().isEmpty())
             ? musicDocument.getTitle().replaceAll("\\s+", "_")
             : "document-" + musicDocument.getId();
 
-    return ResponseEntity.ok()
-            .header(HttpHeaders.CONTENT_DISPOSITION,
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
                     "inline; filename=\"" + fileName + ".pdf\"")
-            .contentType(MediaType.APPLICATION_PDF)
-            .body(pdfBytes);
-}
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
 
     @GetMapping("/{id}/addperformance")
     public String addPerformance(Model model, @PathVariable Long id) {
