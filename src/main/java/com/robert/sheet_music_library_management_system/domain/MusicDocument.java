@@ -3,9 +3,7 @@ package com.robert.sheet_music_library_management_system.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class MusicDocument {
@@ -40,6 +38,9 @@ public class MusicDocument {
     joinColumns = @JoinColumn(name = "music_document_id"),
     inverseJoinColumns = @JoinColumn(name = "performance_id"))
     private Set<Performance> performances = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recording> recordings = new ArrayList<>();
 
     public MusicDocument(Long id, String title, String composer, String arranger, Boolean isCollection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user, LocalDateTime dateTimeOfEntry) {
         this.id = id;
@@ -186,6 +187,11 @@ public class MusicDocument {
 
     public void setDateTimeOfEntry() {
         this.dateTimeOfEntry = LocalDateTime.now();
+    }
+
+    public void addRecording(Recording recording) {
+        recordings.add(recording);
+        recording.setMusicDocument(this);
     }
 
     @Override
