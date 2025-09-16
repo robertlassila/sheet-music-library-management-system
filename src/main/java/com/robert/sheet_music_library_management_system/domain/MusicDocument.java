@@ -2,6 +2,8 @@ package com.robert.sheet_music_library_management_system.domain;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +24,7 @@ public class MusicDocument {
     private String ensemble;
     private String genre;
     private String notesAboutDocument;
+    private LocalDateTime dateTimeOfEntry;
 
     @Lob
     @Column(length = 10485760)
@@ -38,7 +41,7 @@ public class MusicDocument {
     inverseJoinColumns = @JoinColumn(name = "performance_id"))
     private Set<Performance> performances = new HashSet<>();
 
-    public MusicDocument(Long id, String title, String composer, String arranger, Boolean isCollection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user) {
+    public MusicDocument(Long id, String title, String composer, String arranger, Boolean isCollection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user, LocalDateTime dateTimeOfEntry) {
         this.id = id;
         this.title = title;
         this.composer = composer;
@@ -51,6 +54,7 @@ public class MusicDocument {
         this.genre = genre;
         this.notesAboutDocument = notesAboutDocument;
         this.user = user;
+        this.dateTimeOfEntry =dateTimeOfEntry;
     }
 
     public MusicDocument() {
@@ -168,6 +172,21 @@ public class MusicDocument {
         this.pdfFile = pdfFile;
     }
 
+    public Boolean getCollection() {
+        return isCollection;
+    }
+
+    public void setCollection(Boolean collection) {
+        isCollection = collection;
+    }
+
+    public LocalDateTime getDateTimeOfEntry() {
+        return dateTimeOfEntry;
+    }
+
+    public void setDateTimeOfEntry() {
+        this.dateTimeOfEntry = LocalDateTime.now();
+    }
 
     @Override
     public String toString() {
@@ -176,12 +195,17 @@ public class MusicDocument {
                 ", title='" + title + '\'' +
                 ", composer='" + composer + '\'' +
                 ", arranger='" + arranger + '\'' +
+                ", orchestrator='" + orchestrator + '\'' +
                 ", isCollection=" + isCollection +
                 ", hasParts=" + hasParts +
                 ", hasScore=" + hasScore +
                 ", ensemble='" + ensemble + '\'' +
                 ", genre='" + genre + '\'' +
                 ", notesAboutDocument='" + notesAboutDocument + '\'' +
+                ", dateTimeOfEntry=" + dateTimeOfEntry +
+                ", pdfFile=" + Arrays.toString(pdfFile) +
+                ", user=" + user +
+                ", performances=" + performances +
                 '}';
     }
 }

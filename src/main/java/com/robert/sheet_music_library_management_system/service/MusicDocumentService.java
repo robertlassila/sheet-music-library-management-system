@@ -5,8 +5,10 @@ import com.robert.sheet_music_library_management_system.domain.User;
 import com.robert.sheet_music_library_management_system.dto.MusicDocumentDTO;
 import com.robert.sheet_music_library_management_system.repository.MusicDocumentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,9 @@ public class MusicDocumentService {
     }
 
     public MusicDocument save(MusicDocument musicDocument) {
-
+        if (musicDocument.getDateTimeOfEntry() == null) {
+            musicDocument.setDateTimeOfEntry();
+        }
         return musicDocumentRepository.save(musicDocument);
     }
 
@@ -47,6 +51,11 @@ public class MusicDocumentService {
         List<MusicDocument> musicDocuments = findByUser(user);
 
         for (MusicDocument musicDocument : musicDocuments) {
+            save(musicDocument);
+        }
+        musicDocuments.sort(Comparator.comparing(MusicDocument::getDateTimeOfEntry));
+
+        for (MusicDocument musicDocument : musicDocuments) {
             MusicDocumentDTO dto = new MusicDocumentDTO();
             dto.setId(musicDocument.getId());
             dto.setComposer(musicDocument.getComposer());
@@ -55,7 +64,14 @@ public class MusicDocumentService {
             dto.setEnsemble(musicDocument.getEnsemble());
             dtos.add(dto);
         }
+
         return dtos;
+    }
+
+    public String makeTitleFromFileName(String fileName) {
+
+        String baseName = fileName.replaceFirst("[.][^.]+$", "");
+        return baseName;
     }
 
 
