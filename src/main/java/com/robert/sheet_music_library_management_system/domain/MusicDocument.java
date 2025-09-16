@@ -39,7 +39,7 @@ public class MusicDocument {
     inverseJoinColumns = @JoinColumn(name = "performance_id"))
     private Set<Performance> performances = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "musicDocument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recording> recordings = new ArrayList<>();
 
     public MusicDocument(Long id, String title, String composer, String arranger, Boolean isCollection, Boolean hasParts, Boolean hasScore, String ensemble, String genre, String notesAboutDocument, User user, LocalDateTime dateTimeOfEntry) {

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layout :: layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Enter New Recording</title>
+</head>
+<body>
+     <div th:fragment="content">
+         <form action="save" method="post" enctype="multipart/form-data">
+             <div>
+                 <label for="link">Venue Name:</label>
+                 <input id="link" th:field="${recording.link}" type="text">
+             </div>
+             <div>
+                 <label for="artist">Ensemble Name:</label>
+                 <input id="artist" th:field="${recording.artist}" type="text">
+             </div>
+             <div>
+                 <label for="date">Title:</label>
+                 <input id="date" th:field="${recording.date}" type="text">
+             </div>
+             <button type="submit"><span>Create</span></button>
+         </form>
