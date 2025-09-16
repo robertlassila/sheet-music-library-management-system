@@ -63,9 +63,33 @@ public class MusicDocumentController {
         return "musicdocuments/viewsingle";
     }
 
-    @GetMapping("/create")
-    public String newMusicDocument(Model model) {
+    @GetMapping("/uploadpdf")
+    public String uploadPdf(Model model) {
         model.addAttribute("musicDocument", new MusicDocument());
+        return "musicdocuments/uploadpdf";
+    }
+
+    @PostMapping("/uploadpdf")
+    public String uploadPdf(@RequestParam("file") MultipartFile file,
+                            @ModelAttribute MusicDocument musicDocument) throws IOException {
+        if (!file.isEmpty()) {
+        musicDocument.setPdfFile(file.getBytes());
+        }
+
+
+        musicDocument.setTitle(musicDocumentService.makeTitleFromFileName(file.getOriginalFilename()));
+
+        User user = (User) userService.findByGoogleId();
+        musicDocument.setUser(user);
+        MusicDocument saved = musicDocumentService.save(musicDocument);
+        
+        return "redirect:/musicdocuments/update/" + saved.getId();
+    }
+
+
+    @GetMapping("/create")
+    public String newMusicDocument(Model model, MusicDocument musicDocument) {
+        model.addAttribute("musicDocument", musicDocument);
         return "musicdocuments/create";
     }
 
@@ -93,7 +117,7 @@ public class MusicDocumentController {
     musicDocumentService.save(musicDocument);
 
     return "redirect:/musicdocuments";
-}
+    }
 
     @PostMapping("/update/{id}")
     public String updateMusicDocument(@PathVariable Long id,
@@ -114,9 +138,9 @@ public class MusicDocumentController {
         doc.setIsCollection(musicDocument.getIsCollection());
 
         musicDocumentService.save(doc);
-    }
+        }
     return "redirect:/musicdocuments";
-}
+    }
 
     @PostMapping("/delete")
     public String deleteNewMusicDocument(@ModelAttribute MusicDocument musicDocument) {
@@ -126,16 +150,25 @@ public class MusicDocumentController {
 
     @GetMapping("/{id}/pdf")
     public ResponseEntity<byte[]> getMusicDocumentPdf(@PathVariable Long id) {
-    MusicDocument musicDocument = musicDocumentService.findById(id)
+        MusicDocument musicDocument = musicDocumentService.findById(id)
             .orElseThrow(() -> new RuntimeException("Sheet music not found"));
 
-    byte[] pdfBytes = musicDocument.getPdfFile();
+        byte[] pdfBytes = musicDocument.getPdfFile();
 
-    return ResponseEntity.ok()
-            .header(HttpHeaders.CONTENT_DISPOSITION,
-                    "inline; filename=\"" + musicDocument.getTitle().replaceAll("\\s+", "_") + ".pdf\"")
-            .contentType(MediaType.APPLICATION_PDF)
-            .body(pdfBytes);
+        if (pdfBytes == null) {
+            throw new RuntimeException("PDF not found");
+        }
+
+        // Safe file name
+        String fileName = (musicDocument.getTitle() != null && !musicDocument.getTitle().isEmpty())
+            ? musicDocument.getTitle().replaceAll("\\s+", "_")
+            : "document-" + musicDocument.getId();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                    "inline; filename=\"" + fileName + ".pdf\"")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
     }
 
     @GetMapping("/{id}/addperformance")
