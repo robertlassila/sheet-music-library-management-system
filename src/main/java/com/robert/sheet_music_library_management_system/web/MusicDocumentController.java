@@ -72,6 +72,13 @@ public class MusicDocumentController {
     @PostMapping("/uploadpdf")
     public String uploadPdf(@RequestParam("file") MultipartFile file,
                             @ModelAttribute MusicDocument musicDocument) throws IOException {
+        User user = (User) userService.findByGoogleId();
+
+        Long userStorage = musicDocumentService.getUserStorage(user);
+        if (userStorage > 5242880) {
+            return "redirect:/musicdocuments/storagelimit";
+        }
+
         if (!file.isEmpty()) {
         musicDocument.setPdfFile(file.getBytes());
         }
@@ -79,7 +86,7 @@ public class MusicDocumentController {
 
         musicDocument.setTitle(musicDocumentService.makeTitleFromFileName(file.getOriginalFilename()));
 
-        User user = (User) userService.findByGoogleId();
+
         musicDocument.setUser(user);
         MusicDocument saved = musicDocumentService.save(musicDocument);
         
@@ -200,5 +207,8 @@ public class MusicDocumentController {
         return "redirect:/musicdocuments/{docId}";
     }
 
-
+    @GetMapping("/storagelimit")
+    public String storageLimitReached() {
+        return "/storagelimit";
+    }
 }
