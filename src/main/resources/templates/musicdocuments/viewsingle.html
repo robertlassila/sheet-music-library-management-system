@@ -7,45 +7,46 @@
 <body>
     <div th:fragment="content">
         <div>
-                 <label for="title">Title:</label>
-                 <input id="title" th:field="${musicDocument.title}" type="text">
+                 <label for="title"><strong>Title:</strong></label>
+                 <span id="title" th:text="${musicDocument.title}"></span>
              </div>
              <div>
-                 <label for="composer">Composer:</label>
-                 <input id="composer" th:field="${musicDocument.composer}" type="text">
+                 <label for="composer"><strong>Composer:</strong></label>
+                 <span id="composer" th:text="${musicDocument.composer}"></span>
              </div>
              <div>
-                 <label for="arranger">Arranger:</label>
-                 <input id="arranger" th:field="${musicDocument.arranger}" type="text">
+                 <label for="arranger"><strong>Arranger:</strong></label>
+                 <span id="arranger" th:text="${musicDocument.arranger}"></span>
              </div>
              <div>
-                 <label for="orchestrator">Orchestrator:</label>
-                 <input id="orchestrator" th:field="${musicDocument.orchestrator}" type="text">
+                 <label for="orchestrator"><strong>Orchestrator:</strong></label>
+                 <span id="orchestrator" th:text="${musicDocument.orchestrator}"></span>
              </div>
              <div>
-                 <label for="ensemble">Ensemble:</label>
-                 <input id="ensemble" th:field="${musicDocument.ensemble}" type="text">
+                 <label for="ensemble"><strong>Ensemble:</strong></label>
+                 <span id="ensemble" th:text="${musicDocument.ensemble}"></span>
              </div>
              <div>
-                 <label for="genre">Genre:</label>
-                 <input id="genre" th:field="${musicDocument.genre}" type="text">
+                 <label for="genre"><strong>Genre:</strong></label>
+                 <span id="genre" th:text="${musicDocument.genre}"></span>
              </div>
             <div>
-                 <label for="notesAboutDocument">Notes About Document:</label>
-                 <input id="notesAboutDocument" th:field="${musicDocument.notesAboutDocument}" type="text">
+                 <label for="notesAboutDocument"><strong>Notes About Document:</strong></label>
+                 <span id="notesAboutDocument" th:text="${musicDocument.notesAboutDocument}"></span>
             </div>
             <div>
-                 <label for="hasParts">Document Contains Parts:</label>
-                 <input id="hasParts" th:field="${musicDocument.hasParts}" type="checkbox" onclick="return false;">
+                 <label for="hasParts"><strong>Document Contains Parts:</strong></label>
+                 <span id="hasParts" th:text="${musicDocument.hasParts ? 'Yes' : 'No'}"></span>
             </div>
             <div>
-                 <label for="hasScore">Document Contains Score:</label>
-                 <input id="hasScore" th:field="${musicDocument.hasScore}" type="checkbox" onclick="return false;">
+                 <label for="hasScore"><strong>Document Contains Score:</strong></label>
+                 <span id="hasScore" th:text="${musicDocument.hasScore ? 'Yes' : 'No'}"></span>
             </div>
             <div>
-                 <label for="isCollection">Document Contains Multiple Pieces:</label>
-                 <input id="isCollection" th:field="${musicDocument.isCollection}" type="checkbox" onclick="return false;">
+                 <label for="isCollection"><strong>Document Contains Multiple Pieces:</strong></label>
+                 <span id="isCollection" th:text="${musicDocument.isCollection ? 'Yes' : 'No'}"></span>
             </div>
+            </br>
             <iframe th:src="@{/musicdocuments/{id}/pdf(id=${musicDocument.id})}" width="600" height="800"></iframe>
             <a th:href="@{'/musicdocuments/' + ${musicDocument.id} +'/pdf'}" th:download="${musicDocument.title + '.pdf'}">Download PDF</a>
             <div>

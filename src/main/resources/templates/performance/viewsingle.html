@@ -7,20 +7,20 @@
 <body>
     <div th:fragment="content">
             <div>
-                 <label for="venueName">Venue Name:</label>
-                 <input id="venueName" th:field="${performance.venueName}" type="text">
+                 <label for="venueName"><strong>Venue Name:</strong></label>
+                 <span id="venueName" th:text="${performance.venueName}"></span>
              </div>
             <div>
-                 <label for="ensembleName">Ensemble Name:</label>
-                 <input id="ensembleName" th:field="${performance.ensembleName}" type="text">
+                 <label for="ensembleName"><strong>Ensemble Name:</strong></label>
+                 <span id="ensembleName" th:text="${performance.ensembleName}"></span>
              </div>
             <div>
-                 <label for="title">Title:</label>
-                 <input id="title" th:field="${performance.title}" type="text">
+                 <label for="title"><strong>Title:</strong></label>
+                 <span id="title" th:text="${performance.title}"></span>
              </div>
             <div>
-                 <label for="date">Date:</label>
-                 <input id="date" th:field="${performance.date}" type="text">
+                 <label for="date"><strong>Date:</strong></label>
+                 <span id="date" th:text="${performance.date}"></span>
              </div>
 
             <div>
