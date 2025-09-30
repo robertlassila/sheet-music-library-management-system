@@ -3,10 +3,13 @@ package com.robert.sheet_music_library_management_system.web;
 import com.nimbusds.jose.util.Resource;
 import com.robert.sheet_music_library_management_system.domain.MusicDocument;
 import com.robert.sheet_music_library_management_system.domain.Performance;
+import com.robert.sheet_music_library_management_system.domain.Recording;
 import com.robert.sheet_music_library_management_system.domain.User;
 import com.robert.sheet_music_library_management_system.repository.PerformanceRepository;
+import com.robert.sheet_music_library_management_system.repository.RecordingRepository;
 import com.robert.sheet_music_library_management_system.service.MusicDocumentService;
 import com.robert.sheet_music_library_management_system.service.PerformanceService;
+import com.robert.sheet_music_library_management_system.service.RecordingService;
 import com.robert.sheet_music_library_management_system.service.UserService;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -34,13 +37,17 @@ public class MusicDocumentController {
     private final UserService userService;
     private final PerformanceService performanceService;
     private final PerformanceRepository performanceRepository;
+    private final RecordingRepository recordingRepository;
+    private final RecordingService recordingService;
 
 
-    public MusicDocumentController(MusicDocumentService musicDocumentService, UserService userService, PerformanceService performanceService, PerformanceRepository performanceRepository) {
+    public MusicDocumentController(MusicDocumentService musicDocumentService, UserService userService, PerformanceService performanceService, PerformanceRepository performanceRepository, RecordingRepository recordingRepository) {
         this.musicDocumentService = musicDocumentService;
         this.userService = userService;
         this.performanceService = performanceService;
         this.performanceRepository = performanceRepository;
+        this.recordingRepository = recordingRepository;
+        this.recordingService = recordingService;
     }
 
     @GetMapping("")
@@ -57,9 +64,11 @@ public class MusicDocumentController {
         MusicDocument doc = musicDocumentService.findById(id)
             .orElseThrow(() -> new RuntimeException("Document not found"));
         List<Performance> performances = performanceRepository.findByMusicDocumentsContains(doc);
+        List<Recording> recordings = recordingRepository.findByMusicDocumentsContains(doc);
 
         model.addAttribute("musicDocument", doc);
         model.addAttribute("performances", performances);
+        model.addAttribute("recordings", recordings);
         return "musicdocuments/viewsingle";
     }
 
@@ -179,6 +188,18 @@ public class MusicDocumentController {
         List<Performance> performances = performanceService.findByUser(userService.findByGoogleId());
 
         model.addAttribute("performances", performances);
+        model.addAttribute("musicDocument", musicDocument);
+
+        return "performance/readforaddingtodocument";
+    }
+    @GetMapping("/{id}/addrecording")
+    public String addRecording(Model model, @PathVariable Long id) {
+        MusicDocument musicDocument = musicDocumentService.findById(id)
+        .orElseThrow(() -> new RuntimeException("Music Document not found"));
+
+        List<Recording> recordings = recordingService.findByUser(userService.findByGoogleId());
+
+        model.addAttribute("recordings", recordings);
         model.addAttribute("musicDocument", musicDocument);
 
         return "performance/readforaddingtodocument";
