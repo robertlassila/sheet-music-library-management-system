@@ -74,6 +74,18 @@ public class MusicDocumentService {
         return baseName;
     }
 
+    public Long getUserStorage(User user) {
+        Long userStorage = 0L;
+        List<MusicDocument> userList = musicDocumentRepository.findByUser(user);
+
+        for (MusicDocument musicDocument : userList) {
+            byte[] pdfFile = musicDocument.getPdfFile();
+            userStorage = (userStorage + pdfFile.length);
+        }
+
+        return userStorage;
+    }
+
 
 
 }
