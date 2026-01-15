@@ -1,6 +1,6 @@
 # Sheet Music Library Manager 
 
-A full-stack web application to help individuals or organizations organize and manage their sheet music collections. Built as a portfolio project to practice full-stack development, relational databases, and authentication—while solving a practical problem for music management.
+A full-stack web application to help individuals or organizations organize and manage their sheet music collections. Built as a portfolio project to practice full-stack development, relational databases, and authentication while solving a practical problem for music management.
 
 ---
 
